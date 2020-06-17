@@ -125,29 +125,17 @@ const Dashboard: React.FC = () => {
             </thead>
 
             <tbody>
-              {transactions
-                .filter(transaction => transaction.type === 'income')
-                .map(transaction => (
-                  <tr key={transaction.id}>
-                    <td className="title">{transaction.title}</td>
-                    <td className="income">{transaction.formattedValue}</td>
-                    <td>{transaction.category.title}</td>
-                    <td>{transaction.formattedDate}</td>
-                  </tr>
-                ))}
-
-              {transactions
-                .filter(transaction => transaction.type === 'outcome')
-                .map(transaction => (
-                  <tr key={transaction.id}>
-                    <td className="title">{transaction.title}</td>
-                    <td className="outcome">
-                      {`- ${transaction.formattedValue}`}
-                    </td>
-                    <td>{transaction.category.title}</td>
-                    <td>{transaction.formattedDate}</td>
-                  </tr>
-                ))}
+              {transactions.map(transaction => (
+                <tr key={transaction.id}>
+                  <td className="title">{transaction.title}</td>
+                  <td className={transaction.type}>
+                    {transaction.type === 'outcome' && '- '}
+                    {transaction.formattedValue}
+                  </td>
+                  <td>{transaction.category.title}</td>
+                  <td>{transaction.formattedDate}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </TableContainer>
