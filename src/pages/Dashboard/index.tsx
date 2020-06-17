@@ -49,8 +49,14 @@ const Dashboard: React.FC = () => {
         },
       );
 
+      const formattedBalance: Balance = {
+        income: formatValue(response.data.balance.income),
+        outcome: formatValue(response.data.balance.outcome),
+        total: formatValue(response.data.balance.total),
+      };
+
       setTransactions(formattedTransactions);
-      setBalance(response.data.balance);
+      setBalance(formattedBalance);
     }
 
     loadTransactions();
@@ -60,35 +66,55 @@ const Dashboard: React.FC = () => {
     <>
       <Header />
       <Container>
-        <CardContainer>
-          <Card>
-            <header>
-              <p>Entradas</p>
-              <img src={income} alt="Income" />
-            </header>
-            <h1 data-testid="balance-income">
-              {formatValue(Number(balance.income))}
-            </h1>
-          </Card>
-          <Card>
-            <header>
-              <p>Saídas</p>
-              <img src={outcome} alt="Outcome" />
-            </header>
-            <h1 data-testid="balance-outcome">
-              {formatValue(Number(balance.outcome))}
-            </h1>
-          </Card>
-          <Card total>
-            <header>
-              <p>Total</p>
-              <img src={total} alt="Total" />
-            </header>
-            <h1 data-testid="balance-total">
-              {formatValue(Number(balance.total))}
-            </h1>
-          </Card>
-        </CardContainer>
+        {balance.total ? (
+          <CardContainer>
+            <Card>
+              <header>
+                <p>Entradas</p>
+                <img src={income} alt="Income" />
+              </header>
+              <h1 data-testid="balance-income">{balance.income}</h1>
+            </Card>
+            <Card>
+              <header>
+                <p>Saídas</p>
+                <img src={outcome} alt="Outcome" />
+              </header>
+              <h1 data-testid="balance-outcome">{balance.outcome}</h1>
+            </Card>
+            <Card total>
+              <header>
+                <p>Total</p>
+                <img src={total} alt="Total" />
+              </header>
+              <h1 data-testid="balance-total">{balance.total}</h1>
+            </Card>
+          </CardContainer>
+        ) : (
+          <CardContainer>
+            <Card>
+              <header>
+                <p>Entradas</p>
+                <img src={income} alt="Income" />
+              </header>
+              <h1 data-testid="balance-income">carregando...</h1>
+            </Card>
+            <Card>
+              <header>
+                <p>Saídas</p>
+                <img src={outcome} alt="Outcome" />
+              </header>
+              <h1 data-testid="balance-outcome">carregando...</h1>
+            </Card>
+            <Card total>
+              <header>
+                <p>Total</p>
+                <img src={total} alt="Total" />
+              </header>
+              <h1 data-testid="balance-total">carregando...</h1>
+            </Card>
+          </CardContainer>
+        )}
 
         <TableContainer>
           <table>
