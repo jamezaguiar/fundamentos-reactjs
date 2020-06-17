@@ -39,14 +39,11 @@ const Dashboard: React.FC = () => {
       const response = await api.get('transactions');
 
       const formattedTransactions: Transaction[] = response.data.transactions.map(
-        (transaction: Transaction) => {
-          const formattedTransaction = {
-            ...transaction,
-            formattedValue: formatValue(transaction.value),
-            formattedDate: formatDate(new Date(transaction.created_at)),
-          };
-          return formattedTransaction;
-        },
+        (transaction: Transaction) => ({
+          ...transaction,
+          formattedValue: formatValue(transaction.value),
+          formattedDate: formatDate(new Date(transaction.created_at)),
+        }),
       );
 
       const formattedBalance: Balance = {
